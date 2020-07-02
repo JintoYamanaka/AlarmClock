@@ -19,8 +19,10 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.alarmclock.R;
 import com.example.alarmclock.listcomponent.ListItem;
 import com.example.alarmclock.util.DatabaseHelper;
+import com.example.alarmclock.util.ScpTest;
 import com.example.alarmclock.util.Util;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -152,6 +154,14 @@ public class InputActivity extends AppCompatActivity {
                     // 時刻登録の準備
                     String alarmTime = String.format("%02d", hour) + ":"
                             + String.format("%02d", minute);
+
+                    //ラズパイにデータを送信
+                    try {
+                        ScpTest scp = new ScpTest();
+                        scp.doProc(musicName, hour, minute);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     if(reqCode == ConfirmationActivity.EDIT_REQ_CODE){
                         // 編集
